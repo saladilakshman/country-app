@@ -1,4 +1,4 @@
-import {  useContext, } from "react";
+import { useContext } from "react";
 import { APP_DATA } from "../App";
 import {
   Dialog,
@@ -14,10 +14,10 @@ import {
 } from "@mui/material";
 //import debounce from "debounce";
 import WestIcon from "@mui/icons-material/West";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Search = () => {
-  const navigate=useNavigate();
-  const { state, dispatch} = useContext(APP_DATA);
+  const navigate = useNavigate();
+  const { state, dispatch } = useContext(APP_DATA);
   return (
     <>
       <Dialog
@@ -35,7 +35,7 @@ const Search = () => {
             sizes="small"
             fullWidth
             onChange={(e) => {
-              dispatch({type:'search-countries',payload:e.target.value})
+              dispatch({ type: "search-countries", payload: e.target.value });
             }}
             InputProps={{
               startAdornment: (
@@ -52,7 +52,14 @@ const Search = () => {
           {state.list?.map((country, index) => {
             const { name, flags, region } = country;
             return (
-              <List key={index} onClick={()=>document.startViewTransition(()=>navigate(`/${name.official??name.common}`))}>
+              <List
+                key={index}
+                onClick={() => {
+                  document.startViewTransition(() => {
+                    navigate(`/${name.official}`);
+                  });
+                }}
+              >
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar src={flags.png} alt="" />
