@@ -105,7 +105,7 @@ const Country = () => {
                       : "repeat(2,1fr)",
                     placeItems: "baseline",
                     gap: 4,
-                    padding:1.2,
+                    padding: 1.2,
                     paddingBlockEnd: 5,
                   }}
                 >
@@ -115,16 +115,17 @@ const Country = () => {
                     alignItems="baseline"
                     sx={{
                       margin: mobile_layout ? "auto" : "",
-                      width:'100%'
+                      width: "100%",
                     }}
-
                   >
                     <Stack
                       direction="row"
                       justifyContent="center"
                       alignItems="baseline"
                     >
-                      <Typography variant="body1"sx={{whiteSpace:'nowrap'}}>Common name:</Typography>
+                      <Typography variant="body1" sx={{ whiteSpace: "nowrap" }}>
+                        Common name:
+                      </Typography>
                       <Typography variant="body1" id="span">
                         {name.common}
                       </Typography>
@@ -135,7 +136,9 @@ const Country = () => {
                       justifyContent="center"
                       alignItems="baseline"
                     >
-                      <Typography variant="body1"sx={{whiteSpace:'nowrap'}}>Nativename:</Typography>
+                      <Typography variant="body1" sx={{ whiteSpace: "nowrap" }}>
+                        Nativename:
+                      </Typography>
                       <Typography variant="body1" id="span">
                         {nativename}
                       </Typography>
@@ -145,7 +148,7 @@ const Country = () => {
                       Population : <span id="span">{refinedPopulation}</span>
                     </Typography>
                     <Typography variant="body1">
-                      Sub-region : <span id="span">{subregion??"-"}</span>
+                      Sub-region : <span id="span">{subregion ?? "-"}</span>
                     </Typography>
 
                     <Typography variant="body1">
@@ -153,7 +156,6 @@ const Country = () => {
                     </Typography>
                   </Stack>
 
-                   
                   <Stack>
                     <Typography variant="body1">
                       Top level domain : <span id="span">{tld}</span>
@@ -174,55 +176,61 @@ const Country = () => {
                   </Stack>
                 </Box>
 
-
-                 <Stack direction="row"justifyContent="center"alignItems='baseline'spacing={2}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "##414141",
-                    whiteSpace: "nowrap",
-                    paddingBlockEnd: 2,
-                  }}
+                <Stack
+                  direction="row"
+                  justifyContent="start"
+                  alignItems="baseline"
+                  spacing={2}
                 >
-                  Border-Countries: 
-                </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: "##414141",
+                      whiteSpace: "nowrap",
+                      paddingBlockEnd: 2,
+                    }}
+                  >
+                    Border-Countries:
+                  </Typography>
 
-                <Stack direction="row"justifyContent="start"alignItems="center"sx={{
-                  gap:2,
-                  flexWrap:'wrap'
-                }}>
-                  {borders?.map((btn) => {
-                    return (
-                      <div key={index}>
-                        <Button
-                        fullWidth
-                          variant="contained"
-                          size="small"
-                          id="btn"
-                          sx={{
-                            fontSize: 12,
-                            minWidth: "100%",
-                            backgroundColor: "#d76c6e",
-                            "&:hover": {
+                  <Stack
+                    direction="row"
+                    justifyContent="start"
+                    alignItems="center"
+                    sx={{
+                      gap: 2,
+                      flexWrap: "wrap",
+                      paddingBlockEnd:2,
+                    }}
+                  >
+                    {borders?.map((btn) => {
+                      return (
+                        <div key={index}>
+                          <Button
+                            fullWidth
+                            variant="contained"
+                            size="small"
+                            id="btn"
+                            sx={{
+                              fontSize: 12,
+                              minWidth: "100%",
                               backgroundColor: "#d76c6e",
-                            },
-                          }}
-                          onClick={(event) =>
-                            setQuery(event.currentTarget.textContent)
-                          }
-                        >
-                          {countries[btn].name}
-                        </Button>
-                      </div>
-                    );
-                  }) 
-                    
-                }
+                              "&:hover": {
+                                backgroundColor: "#d76c6e",
+                              },
+                            }}
+                            onClick={(event) =>
+                              setQuery(event.currentTarget.textContent)
+                            }
+                          >
+                            {countries[btn].name}
+                          </Button>
+                        </div>
+                      );
+                    })??<Typography variant="body1">This is island country.</Typography>
+                    }
+                  </Stack>
                 </Stack>
-                </Stack>
-
-
-
               </Box>
             </Stack>
           );
