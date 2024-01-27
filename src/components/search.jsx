@@ -52,7 +52,7 @@ const Search = () => {
           {state.list?.map((country, index) => {
             const { name, flags, region } = country;
             return (
-              <List key={index} onClick={()=>document.startViewTransition(()=>navigate(`/${name.official}`))}>
+              <List key={index} onClick={()=>document.startViewTransition(()=>navigate(`/${name.official??name.common}`))}>
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar src={flags.png} alt="" />
