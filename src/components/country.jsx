@@ -172,9 +172,10 @@ const Country = () => {
                       })}
                     </Stack>
                   </Stack>
-
-
                 </Box>
+
+
+                 <Stack direction="row"justifyContent="center"alignItems='baseline'spacing={2}>
                 <Typography
                   variant="body1"
                   sx={{
@@ -185,17 +186,16 @@ const Country = () => {
                 >
                   Border-Countries: 
                 </Typography>
-                <Grid
-                  container
-                  spacing={1.2}
-                  sx={{
-                    width: "100%",
-                  }}
-                >
+
+                <Stack direction="row"justifyContent="start"alignItems="center"sx={{
+                  gap:2,
+                  flexWrap:'wrap'
+                }}>
                   {borders?.map((btn) => {
                     return (
-                      <Grid item key={index} xs={6} lg={6}>
+                      <div key={index}>
                         <Button
+                        fullWidth
                           variant="contained"
                           size="small"
                           id="btn"
@@ -213,12 +213,16 @@ const Country = () => {
                         >
                           {countries[btn].name}
                         </Button>
-                      </Grid>
+                      </div>
                     );
                   }) 
                     
                 }
-                </Grid>
+                </Stack>
+                </Stack>
+
+
+
               </Box>
             </Stack>
           );
