@@ -31,7 +31,7 @@ const Country = () => {
     <Container
       sx={{
         margin: "auto",
-        marginBlockend:3
+        marginBlockend:8
       }}
     >
       {spin ? (
