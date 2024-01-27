@@ -1,0 +1,14 @@
+#country-name{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:1;
+    overflow: hidden;
+}
+#span{
+    color:rgba(239, 57, 91, 0.839);
+    display:inline-block;
+    padding-inline-start:1.2rem;
+}
+.stack-elements::-webkit-scrollbar{
+    display:none;
+}
