@@ -23,10 +23,13 @@ const Country = () => {
       .get(`https://restcountries.com/v3.1/name/${query}`)
       .then((res) => {
         setCountryinfo(res.data);
-        setSpin(false);
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => console.log(err.message))
+      .finally(() => setSpin(false))
   }, [countryname, query]);
+  const TextIntl = (info) => {
+    return new Intl.ListFormat('en-IN', { style: 'long', type: 'conjunction' }).format(info)
+  }
   return (
     <Container
       sx={{
@@ -161,17 +164,10 @@ const Country = () => {
                       Top level domain : <span id="span">{tld}</span>
                     </Typography>
                     <Typography variant="body1">
-                      Currency : <span id="span">{currency}</span>
+                      Currency : <span id="span">{Array.isArray(currency) ? TextIntl(currency) : currency}</span>
                     </Typography>
                     <Stack direction="row">
-                      <Typography variant="body1">Languages : </Typography>
-                      {Array.from(language, (lang, index) => {
-                        return (
-                          <Typography variant="body1" key={index}>
-                            <span id="span">{lang}</span>
-                          </Typography>
-                        );
-                      })}
+                      Languages :<span id="span">{TextIntl(language)}</span>
                     </Stack>
                   </Stack>
                 </Box>
@@ -200,7 +196,7 @@ const Country = () => {
                     sx={{
                       gap: 2,
                       flexWrap: "wrap",
-                      paddingBlockEnd:2,
+                      paddingBlockEnd: 2,
                     }}
                   >
                     {borders?.map((btn) => {
@@ -227,7 +223,7 @@ const Country = () => {
                           </Button>
                         </div>
                       );
-                    })??<Typography variant="body1">This is island country.</Typography>
+                    }) ?? <Typography variant="body1">This is island country.</Typography>
                     }
                   </Stack>
                 </Stack>

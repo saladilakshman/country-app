@@ -83,9 +83,9 @@ const Continents = () => {
       .get("https://restcountries.com/v3.1/all")
       .then((res) => {
         dispatch({ type: "continents-data", payload: res.data });
-        setIsloading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsloading(false))
   }, [dispatch]);
 
   /**displaying each continent countries details based on continent using filter */
@@ -101,6 +101,7 @@ const Continents = () => {
       behavior: "smooth",
     });
   };
+
   return (
     <>
       <AppBar position="fixed" color="info">
@@ -265,7 +266,7 @@ const Continents = () => {
                     position: "absolute",
                     bottom: 20,
                     color: "white",
-                    paddingLeft:0.2,
+                    paddingLeft: 0.2,
                     width: "100%",
                     "&::before": {
                       content: '""',
