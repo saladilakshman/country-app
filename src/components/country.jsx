@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import {
   Container,
-  Grid,
   Typography,
   Box,
   Stack,
@@ -243,7 +242,7 @@ const Country = () => {
                 />
                 <Marker position={[capitalInfo.latlng[0], capitalInfo.latlng[1]]}>
                   <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
+                    {name.official}
                   </Popup>
 
                 </Marker>
