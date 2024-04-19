@@ -431,6 +431,7 @@ const Continents = () => {
                                   margin: "auto",
                                   fontFamily: "helvetica",
                                   paddingBlockStart: 3,
+                                  fontSize: '1.2rem'
                                 }}
                               >
                                 <tbody>

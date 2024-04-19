@@ -12,6 +12,9 @@ import {
 } from "@mui/material";
 import { APP_DATA } from "../App";
 import { countries } from "country-data";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import "../App.css";
 const Country = () => {
   const { countryname } = useParams();
   const { mobile_layout } = useContext(APP_DATA);
@@ -30,6 +33,7 @@ const Country = () => {
   const TextIntl = (info) => {
     return new Intl.ListFormat('en-IN', { style: 'long', type: 'conjunction' }).format(info)
   }
+
   return (
     <Container
       sx={{
@@ -61,6 +65,7 @@ const Country = () => {
             currencies,
             languages,
             borders,
+            capitalInfo
           } = el;
           const refinedPopulation = new Intl.NumberFormat("en-IN").format(
             population
@@ -72,163 +77,178 @@ const Country = () => {
           const currency = Object.values(currencies)[0].name;
           const language = Object.values(languages);
           return (
-            <Stack
-              key={index}
-              direction={mobile_layout ? "column" : "row"}
-              justifyContent="center"
-              alignItems="center"
-              spacing={8}
-              sx={{
-                marginBlockStart: mobile_layout ? 8 : 18,
-              }}
-            >
-              <Box
-                component="img"
-                alt=""
-                src={flags.png}
+            <Box key={index}>
+              <Stack
+                direction={mobile_layout ? "column" : "row"}
+                justifyContent="center"
+                alignItems="center"
+                spacing={8}
                 sx={{
-                  boxShadow: 4,
+                  marginBlockStart: mobile_layout ? 8 : 18,
                 }}
-              />
-              <Box key={index}>
-                <Typography
-                  variant={mobile_layout ? "h6" : "h3"}
-                  textAlign="center"
-                  sx={{
-                    marginBlockEnd: 2,
-                  }}
-                >
-                  {name.official}
-                </Typography>
+              >
                 <Box
+                  component="img"
+                  alt=""
+                  src={flags.png}
                   sx={{
-                    display: "grid",
-                    gridTemplateColumns: mobile_layout
-                      ? "repeat(1,1fr)"
-                      : "repeat(2,1fr)",
-                    placeItems: "baseline",
-                    gap: 4,
-                    padding: 1.2,
-                    paddingBlockEnd: 5,
+                    boxShadow: 4,
                   }}
-                >
-                  <Stack
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="baseline"
-                    sx={{
-                      margin: mobile_layout ? "auto" : "",
-                      width: "100%",
-                    }}
-                  >
-                    <Stack
-                      direction="row"
-                      justifyContent="center"
-                      alignItems="baseline"
-                    >
-                      <Typography variant="body1" sx={{ whiteSpace: "nowrap" }}>
-                        Common name:
-                      </Typography>
-                      <Typography variant="body1" id="span">
-                        {name.common}
-                      </Typography>
-                    </Stack>
-
-                    <Stack
-                      direction="row"
-                      justifyContent="center"
-                      alignItems="baseline"
-                    >
-                      <Typography variant="body1" sx={{ whiteSpace: "nowrap" }}>
-                        Nativename:
-                      </Typography>
-                      <Typography variant="body1" id="span">
-                        {nativename}
-                      </Typography>
-                    </Stack>
-
-                    <Typography variant="body1">
-                      Population : <span id="span">{refinedPopulation}</span>
-                    </Typography>
-                    <Typography variant="body1">
-                      Sub-region : <span id="span">{subregion ?? "-"}</span>
-                    </Typography>
-
-                    <Typography variant="body1">
-                      Capital : <span id="span">{capital}</span>
-                    </Typography>
-                  </Stack>
-
-                  <Stack>
-                    <Typography variant="body1">
-                      Top level domain : <span id="span">{tld}</span>
-                    </Typography>
-                    <Typography variant="body1">
-                      Currency : <span id="span">{Array.isArray(currency) ? TextIntl(currency) : currency}</span>
-                    </Typography>
-                    <Stack direction="row">
-                      Languages :<span id="span">{TextIntl(language)}</span>
-                    </Stack>
-                  </Stack>
-                </Box>
-
-                <Stack
-                  direction="row"
-                  justifyContent="start"
-                  alignItems="baseline"
-                  spacing={2}
-                >
+                />
+                <Box key={index}>
                   <Typography
-                    variant="body1"
+                    variant={mobile_layout ? "h6" : "h3"}
+                    textAlign="center"
                     sx={{
-                      color: "##414141",
-                      whiteSpace: "nowrap",
-                      paddingBlockEnd: 2,
+                      marginBlockEnd: 2,
                     }}
                   >
-                    Border-Countries:
+                    {name.official}
                   </Typography>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: mobile_layout
+                        ? "repeat(1,1fr)"
+                        : "repeat(2,1fr)",
+                      placeItems: "baseline",
+                      gap: 4,
+                      padding: 1.2,
+                      paddingBlockEnd: 5,
+                    }}
+                  >
+                    <Stack
+                      direction="column"
+                      justifyContent="center"
+                      alignItems="baseline"
+                      sx={{
+                        margin: mobile_layout ? "auto" : "",
+                        width: "100%",
+                      }}
+                    >
+                      <Stack
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="baseline"
+                      >
+                        <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
+                          Common name:
+                        </Typography>
+                        <Typography variant="h6" id="span">
+                          {name.common}
+                        </Typography>
+                      </Stack>
+
+                      <Stack
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="baseline"
+                      >
+                        <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
+                          Nativename:
+                        </Typography>
+                        <Typography variant="h6" id="span">
+                          {nativename}
+                        </Typography>
+                      </Stack>
+
+                      <Typography variant="h6">
+                        Population : <span id="span">{refinedPopulation}</span>
+                      </Typography>
+                      <Typography variant="h6">
+                        Sub-region : <span id="span">{subregion ?? "-"}</span>
+                      </Typography>
+
+                      <Typography variant="h6">
+                        Capital : <span id="span">{capital}</span>
+                      </Typography>
+                    </Stack>
+
+                    <Stack>
+                      <Typography variant="h6">
+                        Top level domain : <span id="span">{tld}</span>
+                      </Typography>
+                      <Typography variant="h6">
+                        Currency : <span id="span">{Array.isArray(currency) ? TextIntl(currency) : currency}</span>
+                      </Typography>
+                      <Stack direction="row">
+                        <Typography variant="h6">
+                          Languages :<span id="span">{TextIntl(language)}</span>
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                  </Box>
 
                   <Stack
                     direction="row"
                     justifyContent="start"
-                    alignItems="center"
-                    sx={{
-                      gap: 2,
-                      flexWrap: "wrap",
-                      paddingBlockEnd: 2,
-                    }}
+                    alignItems="baseline"
+                    spacing={2}
                   >
-                    {borders?.map((btn) => {
-                      return (
-                        <div key={index}>
-                          <Button
-                            fullWidth
-                            variant="contained"
-                            size="small"
-                            id="btn"
-                            sx={{
-                              fontSize: 12,
-                              minWidth: "100%",
-                              backgroundColor: "#d76c6e",
-                              "&:hover": {
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: "##414141",
+                        whiteSpace: "nowrap",
+                        paddingBlockEnd: 2,
+                      }}
+                    >
+                      Border-Countries:
+                    </Typography>
+
+                    <Stack
+                      direction="row"
+                      justifyContent="start"
+                      alignItems="center"
+                      sx={{
+                        gap: 2,
+                        flexWrap: "wrap",
+                        paddingBlockEnd: 2,
+                      }}
+                    >
+                      {borders?.map((btn) => {
+                        return (
+                          <div key={index}>
+                            <Button
+                              fullWidth
+                              variant="contained"
+                              size="small"
+                              id="btn"
+                              sx={{
+                                fontSize: 12,
+                                minWidth: "100%",
                                 backgroundColor: "#d76c6e",
-                              },
-                            }}
-                            onClick={(event) =>
-                              setQuery(event.currentTarget.textContent)
-                            }
-                          >
-                            {countries[btn].name}
-                          </Button>
-                        </div>
-                      );
-                    }) ?? <Typography variant="body1">This is island country.</Typography>
-                    }
+                                "&:hover": {
+                                  backgroundColor: "#d76c6e",
+                                },
+                              }}
+                              onClick={(event) =>
+                                setQuery(event.currentTarget.textContent)
+                              }
+                            >
+                              {countries[btn].name}
+                            </Button>
+                          </div>
+                        );
+                      }) ?? <Typography variant="body1">This is island country.</Typography>
+                      }
+                    </Stack>
                   </Stack>
-                </Stack>
-              </Box>
-            </Stack>
+                </Box>
+              </Stack>
+              <MapContainer center={[capitalInfo.latlng[0], capitalInfo.latlng[1]]} zoom={6} scrollWheelZoom={false}>
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={[capitalInfo.latlng[0], capitalInfo.latlng[1]]}>
+                  <Popup>
+                    A pretty CSS3 popup. <br /> Easily customizable.
+                  </Popup>
+
+                </Marker>
+              </MapContainer>
+            </Box>
           );
         })
       )}
